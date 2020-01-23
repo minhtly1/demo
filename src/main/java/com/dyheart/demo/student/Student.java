@@ -2,14 +2,26 @@ package com.dyheart.demo.student;
 
 import java.util.UUID;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Student {
 	
 	private final UUID studentId; 
+	
+	@NotBlank
 	private final String firstName; 
+	
+	@NotBlank
 	private final String lastName; 
+	
+	@Email
 	private final String email; 
+	
+	@NotNull
 	private final Gender gender; 
 	
 	enum Gender {

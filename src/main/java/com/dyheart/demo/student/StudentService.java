@@ -7,14 +7,22 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.dyheart.demo.EmailValidator;
+import com.dyheart.demo.exception.ApiRequestException;
+
 @Service
 public class StudentService {
 	
 	private final StudentDataAccessService studentDataAccessService; 
 	
+	private final EmailValidator emailValidator;
+	
 	@Autowired
-	public StudentService(StudentDataAccessService studentDataAccessService) {
+	public StudentService(
+			StudentDataAccessService studentDataAccessService,
+			EmailValidator emailValidator) {
 		this.studentDataAccessService = studentDataAccessService;
+		this.emailValidator = emailValidator;
 	}
 
 
@@ -30,7 +38,12 @@ public class StudentService {
 	void addNewStudent(UUID studentId, Student student) {
 		UUID newStudentId = Optional.ofNullable(studentId).orElse(UUID.randomUUID());
 		
+		//TODO: Validate email
+		if(!emailValidator.test(student.getEmail())) {
+			throw new ApiRequestException(student.getEmail() + " is not valid");
+		}
 		//TODO: verify that email is not taken 
+		
 		studentDataAccessService.insertStudent(newStudentId, student);
 		
 	}
