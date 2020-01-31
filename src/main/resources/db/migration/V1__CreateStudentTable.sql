@@ -5,3 +5,4 @@ CREATE TABLE IF NOT EXISTS student(
 	email VARCHAR(100) NOT NULL UNIQUE, 
 	gender VARCHAR(6) NOT NULL CHECK (gender = 'MALE' OR gender = 'male' OR gender = 'FEMALE' OR gender = 'female')	
 );
+
